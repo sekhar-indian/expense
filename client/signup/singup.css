@@ -1,0 +1,35 @@
+body{
+    background-color: rgb(54, 131, 207);
+}
+.input-container{
+   border-radius: 10px;
+   height: 40px;
+   border: solid none;
+   margin: 10px;
+   font-family: roboto; 
+   text-align: center;
+   width: 400px;
+   border-style: none;
+}
+.button-container{
+    border-radius: 10px;
+    height: 35px;
+    width: 50px;
+    border-style: none;
+    font-family: roboto;
+}
+.form-container{
+    text-align: center;
+    background-color: rgb(29, 69, 106);
+    border: solid blanchedalmond;
+    border-radius: 10px;
+    padding: 40px;
+    margin-left: 5%;
+    margin-right: 10%;
+  
+}
+.heading-container{
+    color: white;
+    font-weight: 800;
+    text-decoration:double;
+}

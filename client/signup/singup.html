@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="singup.css" ></link>
+    <title>Document</title>
+</head>
+<body>
+    <form class="form-container" onsubmit="singupform(event)">
+        <h2 class="heading-container">Create New Account</h2>
+        <input type="text" class="input-container" placeholder="Enter Your Name" name="name"><br>
+        <input type="text" class="input-container" placeholder="Enter Phone Number" name="phone"><br>
+        <input type="text" class="input-container" placeholder="Enter Email" name="email"><br>
+        <input type="password" class="input-container" placeholder="Enter Password" name="password"><br>
+        <button type="submit" class="button-container">SigUp</button>     
+    </form>
+    <a href="../login/login.html">SingUp</a>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="singup.js"></script>
+</body>
+</html>

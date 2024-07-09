@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="expens.css" ></link>
+    <title>Document</title>
+</head>
+<div class="homepage">
+    
+    <form class="form-container" onsubmit="expenseAdd(event)">
+        
+        <h2 class="heading-container">Add expenses</h2>
+        <div class="hh">
+        <input type="text" class="input-container" placeholder="Choose Expense" name="expense">
+        <input type="text" class="input-container" placeholder="discription" name="dicription">
+        <select id="expenses" class="input-container" name="expenses">
+            <option value="petrol">petrol</option>
+            <option value="food">food</option>
+            <option value="helth">helth</option>
+            <option value="rent">rent</option>
+            <option value="ext">ext</option>
+        </select>
+        
+    </div>
+        <button type="submit" class="button-container">Add</button>
+
+    </form>
+    <button class="premium" id="rzp-button1">PREMIUM</button>
+    
+    <button class="download" onclick="dowdloadExpence()">download</button>
+    <div id="massage"></div>
+   <div id="dataElement">
+    
+   </div>
+   <div id="leederboard"></div>
+
+   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="expens.js"></script>
+</div>
+</html> 
