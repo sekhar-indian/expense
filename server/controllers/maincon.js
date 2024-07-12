@@ -1,6 +1,7 @@
 const Orders=require('../models/orders');//database table
 const squelize=require('../models/signup');//database table
 const Expense=require('../models/expense');//database table
+const S3file=require('../models/s3files');
 const { where } = require('sequelize');//database pakage
 require('dotenv').config();//.env file
 const Razorpay=require('razorpay');//Razorpay
@@ -12,7 +13,7 @@ const AWS=require('aws-sdk')
 
 
 //singupformdata
-exports.singupformdata= async (req,res,next)=>{
+ const singupformdata= async (req,res,next)=>{
     const {name,phone,email,password}=req.body;  
     const bcryptPassword=await bcrypt.hash(password,10)
     try{
@@ -29,7 +30,7 @@ exports.singupformdata= async (req,res,next)=>{
 }
 
 //loginformdata
-exports.loginformdata=async (req,res,next)=>{
+const loginformdata=async (req,res,next)=>{
     const {email,password}=req.body;
     console.log(password)
     try{
@@ -39,8 +40,8 @@ exports.loginformdata=async (req,res,next)=>{
         console.log(user.password)
         const validPassword=await bcrypt.compare(password,user.password);
         console.log(validPassword)
-         if(validPassword){
-            const jwtToken=jwt.sign({userid:user.id},'munisekhar',{expiresIn:'1m'});
+         if(validPassword){  
+            const jwtToken=jwt.sign({userid:user.id,premium:user.premium},'munisekhar',{expiresIn:'10m'});
             res.status(200)
             res.json(jwtToken);
          }else{
@@ -54,7 +55,7 @@ exports.loginformdata=async (req,res,next)=>{
 }
 
 // expensepost
-exports.expensepost=async(req,res,next)=>{
+const expensepost=async(req,res,next)=>{
     const {expense,dicription,expenses}=req.body;
     try{ 
         const expensAsddingDb=Expense.create({
@@ -75,10 +76,14 @@ exports.expensepost=async(req,res,next)=>{
 }
 
 //getDataExpenses
-exports.getDataExpenses=async (req,res,next)=>{
+const getDataExpenses=async (req,res,next)=>{
+    const page=req.params.page
     const userid=req.userid;
+    
+   const start=(page-1)*4;
+  
    try{
-    const data= await Expense.findAll({where:{userId:userid}},{attributes:['id','expense','dicription','expenses']});
+    const data= await Expense.findAll({where:{userId:userid},attributes:['id','expense','dicription','expenses'],offset:start ,limit:4});//get data start=4, limit=8
     res.status(200).json(data);
    }catch(err){
     res.status(404).send(err)
@@ -86,14 +91,15 @@ exports.getDataExpenses=async (req,res,next)=>{
 }
 
 //expenseDelete
-exports.expenseDelete=async (req,res,next)=>{
+const expenseDelete=async (req,res,next)=>{
     const id=req.params.id;
     const userid=req.userid;
     try{
         const expense=await Expense.findOne({where:{id:id}});
         expenseAmount=await  expense.dicription
         const user=await squelize.findOne({where:{id:userid}});
-        const userAmount= await user.totalamount-expenseAmount
+        const userAmount= await user.totalamount-expenseAmount;
+        console.log(userAmount,'gfdgfdnpm')
         const update=await user.update({totalamount:userAmount})
         const deleteexpens = await Expense.destroy({where:{id:id}});
         res.send(200)
@@ -104,7 +110,7 @@ exports.expenseDelete=async (req,res,next)=>{
 }
 
 //premium Razorpay
-exports.premium= async (req,res,next)=>{
+const premium= async (req,res,next)=>{
     var instance = new Razorpay({
         key_id: process.env.KEY_ID,
         key_secret:process.env.KEY_SECRET,
@@ -125,7 +131,7 @@ exports.premium= async (req,res,next)=>{
 
 
 //premiumok
-exports.premiumUpdate=async (req,res,next)=>{
+const premiumUpdate=async (req,res,next)=>{
     const userid=req.userid;
     const {orderId,paymentId}=req.body;
     try{
@@ -142,28 +148,28 @@ exports.premiumUpdate=async (req,res,next)=>{
 
 
 //leader board
-exports.leaderboard=async (req,res,next)=>{
+const leaderboard=async (req,res,next)=>{
     try{
         let users= await squelize.findAll({
             attributes:['name','totalamount'],
             order:[['totalamount','DESC']]});
             res.status(200).json(users);
     }catch(err){
-      res.status(404)
-      res.send(err)
+      res.status(404).send(err)
     }
 }
 
 // expence download button
-exports.downloadButton=async(req,res,next)=>{
+const downloadButton=async(req,res,next)=>{
     const userid=req.userid;
     console.log(userid)
     try{
-     const data= await Expense.findAll({where:{userId:userid}},{attributes:['expense','dicription','expenses']});
+     const data= await Expense.findAll({where:{userId:userid},attributes:['expense','dicription','expenses']});
      const stringifiExpence=await JSON.stringify(data);
-     const feeldname='Expence.text';
-     const fildUrl=uploadS3Bucket(stringifiExpence,feeldname)
-    //  res.status(200).json(data,fildUrl);
+     const feeldname=`${userid}expense.txt`;
+     const fildUrl= await uploadS3Bucket(stringifiExpence,feeldname);
+     const aploadUrlDatabace= await S3file.create({link:fildUrl.Location,userId:userid})
+     console.log(fildUrl,'sdcdsd')
     }catch(err){
         console.log(err)
      res.status(404).send(err);
@@ -180,46 +186,46 @@ function uploadS3Bucket(data,filename){
         secretAccessKey:BUKET_SECRET_KEY,
     })
 
-    s3buket.createBucket(()=>{
+    return new Promise((resolve,reject)=>{
         var params={
             Bucket:BUKET_NAME,
             Key:filename,
-            Body:data
+            Body:data,
+            ACL:'public-read'
         }
 
-        s3buket.upload(params,(err,data)=>{
+    s3buket.upload(params,(err,data)=>{
             if(err){
                 console.log('error getin',err)
+                reject(err)
             }else{
-                console.log(data)
+                console.log(data);
+               resolve(data)
             }
         })
     })
 }
 
 
-// function uploadS3Bucket(data, filename) {
-//     const BUCKET_NAME = 'expence-app';
-//     const IAM_USER_KEY = process.env.IAM_USER_KEY;
-//     const BUCKET_SECRET_KEY = process.env.BUCKET_SECRET_KEY;
+const s3filekink=async (req,res,next)=>{
+     const  userid=req.userid
+     try{
+        data= await S3file.findAll({where:{userId:userid},attributes:['link']});
+        res.status(200).send(data)
+     }catch(err){
+        res.status(404).send(err)
+     }
+}
 
-//     let s3bucket = new AWS.S3({
-//         accessKeyId: IAM_USER_KEY,
-//         secretAccessKey: BUCKET_SECRET_KEY,
-//     });
-
-//     var params = {
-//         Bucket: BUCKET_NAME,
-//         Key: filename,
-//         Body: data
-//     };
-
-//     s3bucket.upload(params, (err, data) => {
-//         if (err) {
-//             console.log('Error uploading data: ', err);
-//         } else {
-//             console.log('Successfully uploaded data to ' + BUCKET_NAME + '/' + filename);
-//             console.log(data);
-//         }
-//     });
-// }
+module.exports={
+    singupformdata,
+    loginformdata,
+    expensepost,
+    getDataExpenses,
+    expenseDelete,
+    premium,
+    premiumUpdate,
+    leaderboard,
+    downloadButton,
+    s3filekink
+}

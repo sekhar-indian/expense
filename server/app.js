@@ -8,6 +8,7 @@ const sequelize=require('./util/dbConection');
 const Userdb=require('./models/signup');
 const Expense=require('./models/expense');
 const Orders=require('./models/orders');
+const s3file=require('./models/s3files');
 
 // const admin=require('./routers/admin');
 const user=require('./routers/user');
@@ -22,8 +23,11 @@ Expense.belongsTo(Userdb,{constraints:true,onDelete:'CASCADE'});
 Userdb.hasMany(Expense)
 Orders.belongsTo(Userdb,{constraints:true,onDelete:'CASCADE'});
 Userdb.hasMany(Orders)
+s3file.belongsTo(Userdb,{constraints:true,onDelete:'CASCADE'});
+Userdb.belongsTo(s3file)
+
 sequelize
-    .sync({focus:true})
+    .sync()
     .then(res=>{
     app.listen(3000,()=>{
         console.log('server ok')

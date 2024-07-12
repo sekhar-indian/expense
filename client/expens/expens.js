@@ -22,12 +22,17 @@ try{
 window.onload=()=>{
     getDataExpenses() 
     jwtTokenPrimium=localStorage.getItem('primium');
-    decodeToken=parseJwt(jwtTokenPrimium)
-    if(decodeToken.premium){
-        document.getElementById('rzp-button1').style.visibility = 'hidden'; 
-        document.getElementById('massage').innerHTML = `<button onclick='leaderboard(event)' >show leadr board</button>`
+    decodeToken=parseJwt(jwtTokenPrimium);
+    console.log('kkkk',decodeToken)
+    if(decodeToken.premium ){
+        document.getElementById('rzp-button1').style.visibility = 'hidden';
+        document.getElementById('dowdloadExpence').removeAttribute('hidden');
+        document.getElementById('massage').innerHTML = `<button class="leaderboard" onclick='leaderboard()' >show leadr board</button>`;
+        s3fileslinks();
     }
 }
+
+
 
 function parseJwt(token) {
     // Example implementation to decode JWT token
@@ -41,13 +46,20 @@ function parseJwt(token) {
 }
 
 
-async function getDataExpenses(){
+
+let stoppagenumber;
+async function getDataExpenses(page=1){
  const jwtToken=localStorage.getItem('jwtToken');
+
  try{
-    const response=await axios.get('http://localhost:3000/getExpenses',{headers:{'Authorization': `Bearer ${jwtToken}`} })
+    
+    const response=await axios.get(`http://localhost:3000/getExpenses/${page}`,{headers:{'Authorization': `Bearer ${jwtToken}`} })
         console.log(response.data);
         let chElement=document.getElementById('dataElement');
         chElement.innerHTML=''
+        if(response.data.length==0){
+            stoppagenumber=page;
+        }
         for(let i=0;i<response.data.length;i++){
             let tempElement=document.createElement('div');
             tempElement.className='data-container'
@@ -58,8 +70,14 @@ async function getDataExpenses(){
         }  
  }catch(err){
     if(err.response.status==401){
-    window.location.href="../login/login.html"
+        window.location.href="../login/login.html"
+   }
+    else if(err.response.status==404){
+        console('err')
+    }else{
+        console.log(err)
     }
+    
  }
 }
 
@@ -77,6 +95,7 @@ function deleteData(event,i){
     })
     .then(re=>{
         getDataExpenses()
+        leaderboard()
         console.log(re)
     })
     .catch(er=>console.log(er))
@@ -139,18 +158,24 @@ async function leaderboard(){
         const res= await axios.get('http://localhost:3000/leaderboard',{headers:{'Authorization' : `Bearer ${jwtToken}`}})
         let data =res.data
         const ele = document.getElementById('leederboard');
-        ele.id='leederboards'
-        ele.innerHTML='<h2 class="leaderboard-heading">LEADER BOARD</h2>';
+        // ele.id='leederboards'
+        ele.innerHTML='<div class="ld"><h2 class="leaderboard-heading">LEADER BOARD</h2> <div class="table-headings"> <div class="flex-container bb"> <div class="table-heading-name">NameS</div> <div class="table-heading-amount">Amout</div> </div></div></div>';
         for (let i = 0; i < data.length; i++) {
             let li = document.createElement('div');
-            li.innerHTML = `${data[i].name} ${data[i].totalamount}`;
+            li.innerHTML = `<div class=" ld flex-container"><div class=' flex-item name-container'>${data[i].name}</div> <div class=' flex-item amount-container'> ${data[i].totalamount}</div></div>`;
             ele.appendChild(li);
         }
     }catch(err){
-        if(err.response.status==401){
-             window.location.href="../login/login.html"
-        }
-    }
+    //     if(err.response.status==401){
+    //         window.location.href="../login/login.html"
+    //    }
+    //     else if(err.response.status==404){
+    //         console('err')
+    //     }else{
+    //         console.log(err)
+    //     }
+    
+    console.log(err)}
 }
 
 
@@ -163,4 +188,51 @@ async function dowdloadExpence(){
     }catch(err){
         console.log(err)
     }
+}
+
+
+//pagination
+let current=1
+function pagination_current(){
+   let value= document.getElementById('pagination_current').value;
+    value=parseInt(value)
+    getDataExpenses(value)
+}
+function pv(){
+    let value= document.getElementById('pagination_current').value;
+    value=parseInt(value);
+    let Element=document.getElementById('pagination_current')
+   if(value>1){
+    Element.value=value-1;
+    Element.innerText=`${value-1}`
+    pagination_current()
+   }
+}
+function next(){
+    let value= document.getElementById('pagination_current').value;
+    value=parseInt(value);
+    let Element=document.getElementById('pagination_current')
+   
+   if(value<stoppagenumber || stoppagenumber==undefined ){
+    Element.value=value+1;
+    Element.innerText=`${value+1}`
+    pagination_current()
+   }
+   
+}
+
+
+
+//s3 files geting
+async function s3fileslinks(){
+  const jwtToken=localStorage.getItem('jwtToken');
+  const s3links=await axios.get('http://localhost:3000/s3filekink',{headers:{'Authorization' : `Bearer ${jwtToken}`}});
+  console.log(s3links.data);
+  const Element = document.getElementById('s3files-container');
+
+  for (let i = 0; i < s3links.data.length; i++) {
+      let tempElement = document.createElement('div');
+      tempElement.innerHTML = `<a class="s3linksw" href="${s3links.data[i].link}">${i+1} Previous Todu List iles</a>`;
+      Element.append(tempElement);
+  }
 }

@@ -1,5 +1,10 @@
 body{
-    background-color: rgb(54, 131, 207);
+    background: linear-gradient(to right, #ff7e5f, #feb47b);
+    /* background-color: #85FFBD;
+    background-image: linear-gradient(45deg, #85FFBD 0%, #FFFB7D 100%) */
+    /* background-color: #FAD961;
+    background-image: linear-gradient(90deg, #FAD961 0%, #F76B1C 100%); */
+    /* background-image: linear-gradient(180deg, #A9C9FF 0%, #FFBBEC 100%); */
 }
 .input-container{
    border-radius: 10px;
@@ -20,7 +25,7 @@ body{
 }
 .form-container{
     text-align: center;
-    background-color: rgb(29, 69, 106);
+    background-color: #b39a87;
     border: solid blanchedalmond;
     border-radius: 10px;
     padding: 40px;
@@ -36,7 +41,7 @@ body{
     text-decoration:double;
 }
 .data-item-container{
-    background-color: rgb(29, 69, 106);
+    background-color:  #bd9576;
     color: white;
     border-radius: 10px;
     padding: 10px;
@@ -48,6 +53,9 @@ body{
     display: flex;
     margin: 10px;
 }
+#dataElement{
+    margin-top: 40px;
+}
 .data-delete-button-container{
     border-radius: 10px;
     background-color: white;
@@ -57,23 +65,95 @@ body{
 }
 
 .premium{
-    border: solid black;
+    border: solid gold;
     background-color: #FFD700;
     color:rgb(214, 22, 22);
     border-radius: 90px;
     width: 95px;
     height: 30px;
     font-family: bold;
-    
+  
 }
 
 #leederboards{
-    color:white;
-    background-color: #32149d;
+    color:rgb(0, 0, 0);
+    background-color:white;
     padding: 10px;
     border-radius: 15px;
 }
 .leaderboard-heading{
-    text-align: center;
-    color:red;
+    /* text-align: center;
+    color:black;
+    background-color: #FFD700; */
+}
+.flex-container{
+    display: flex;
+}
+.flex-item{
+    width: 90%;
+    margin: 10px;
+    font-size: x-large;
+    font-family: roboto;
+}
+.table-heading-amount{
+    width: 90%;
+    margin: 10px;
+    font-size:xx-large;
+    font-family: roboto;
+}
+.table-heading-name{
+    width: 90%;
+    margin: 10px;
+    font-size:xx-large;
+    font-family: roboto;
+}
+.bb{
+    background-color: #FFD700;
+    border-radius: 10px;
+}
+.ld{
+    background-color: white;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+}
+.leaderboard{
+    height: 35px;
+    width: 90px;
+    border-radius: 10px;
+    border-style: none;
+    font-family: roboto;
+
+}
+
+/* paginqation */
+.pagination-button{
+    border-radius: 50%;
+    padding: 10px;
+    border-style: none;
+}
+.pagination-container{
+    margin-top: 20px;
+    margin-left: 15%;
+}
+.download-item-main{
+    padding: 10px;
+    border-radius: 10px;
+    border: solid white;
+    font-family: bold;
+    margin-bottom: 10px;
+   
+}
+
+#s3files-container{
+    display: flex;
+}
+.s3linksw{
+    text-decoration: none;
+    margin-top: 45px;
+    margin: 10px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 5px;
+
 }
