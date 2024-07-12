@@ -25,7 +25,7 @@ Orders.belongsTo(Userdb,{constraints:true,onDelete:'CASCADE'});
 Userdb.hasMany(Orders)
 s3file.belongsTo(Userdb,{constraints:true,onDelete:'CASCADE'});
 Userdb.belongsTo(s3file)
-
+ 
 sequelize
     .sync()
     .then(res=>{

@@ -8,4 +8,4 @@ const s3file=sequelize.define('s3files',{
     },
 });
 
-module.exports=s3file; 
+module.exports=s3file;  
