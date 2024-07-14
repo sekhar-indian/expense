@@ -7,7 +7,7 @@ async function loginform(event){
     }
    
     try{
-        const loginformData= await axios.post('http://localhost:3000/loginformdata',data)
+        const loginformData= await axios.post('http://13.48.30.5:3000/loginformdata',data)
         if(loginformData.status==200){
             alert("login sucsuss")
             localStorage.setItem('jwtToken',loginformData.data);

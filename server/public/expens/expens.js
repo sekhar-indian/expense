@@ -9,7 +9,7 @@ async function expenseAdd(event){
     }
     const jwtToken=localStorage.getItem('jwtToken');
 try{
-    const postData= await axios.post('http://localhost:3000/expense',data,{headers:{ 'Authorization': `Bearer ${jwtToken}`}});
+    const postData= await axios.post('http://13.48.30.5:3000/expense',data,{headers:{ 'Authorization': `Bearer ${jwtToken}`}});
     getDataExpenses()
     event.target.reset()
 } catch(err){
@@ -53,7 +53,7 @@ async function getDataExpenses(page=1){
 
  try{
     
-    const response=await axios.get(`http://localhost:3000/getExpenses/${page}`,{headers:{'Authorization': `Bearer ${jwtToken}`} })
+    const response=await axios.get(`http://13.48.30.5:3000/getExpenses/${page}`,{headers:{'Authorization': `Bearer ${jwtToken}`} })
         console.log(response.data);
         let chElement=document.getElementById('dataElement');
         chElement.innerHTML=''
@@ -88,7 +88,7 @@ function deleteData(event,i){
     const jwtToken=localStorage.getItem('jwtToken');
     console.log(i);
     const id = event.target.parentElement.id;
-    axios.get(`http://localhost:3000/expenseDelete/${id}`,{
+    axios.get(`http://13.48.30.5:3000/expenseDelete/${id}`,{
         headers:{
             'Authorization': `Bearer ${jwtToken}`
         }
@@ -107,7 +107,7 @@ function deleteData(event,i){
 
 document.getElementById('rzp-button1').onclick = function(e){
     const jwtToken=localStorage.getItem('jwtToken');
-    axios.get('http://localhost:3000/premium',{
+    axios.get('http://13.48.30.5:3000/premium',{
         headers:{
             'Authorization': `Bearer ${jwtToken}`
         }
@@ -120,10 +120,10 @@ document.getElementById('rzp-button1').onclick = function(e){
         "order_id": orderId, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
         "handler": async function (response) {
                 try{
-                    const d= await axios.post('http://localhost:3000/premiumUpdate', {
+                    const d= await axios.post('http://13.48.30.5:3000/premiumUpdate', {
                         orderId: orderId,
                         paymentId: response.razorpay_payment_id
-                    }, {
+                    }, { 
                         headers: {
                             'Authorization': `Bearer ${jwtToken}`
                         }
@@ -155,7 +155,7 @@ document.getElementById('rzp-button1').onclick = function(e){
 async function leaderboard(){
     const jwtToken=localStorage.getItem('jwtToken');
     try{
-        const res= await axios.get('http://localhost:3000/leaderboard',{headers:{'Authorization' : `Bearer ${jwtToken}`}})
+        const res= await axios.get('http://13.48.30.5:3000/leaderboard',{headers:{'Authorization' : `Bearer ${jwtToken}`}})
         let data =res.data
         const ele = document.getElementById('leederboard');
         // ele.id='leederboards'
@@ -183,7 +183,7 @@ async function leaderboard(){
 async function dowdloadExpence(){
     const jwtToken=localStorage.getItem('jwtToken');
     try{
-        const data=await axios.get('http://localhost:3000/downloadButton',{headers:{'Authorization' : `Bearer ${jwtToken}`}})
+        const data=await axios.get('http://13.48.30.5:3000/downloadButton',{headers:{'Authorization' : `Bearer ${jwtToken}`}})
         console.log(data.data)
     }catch(err){
         console.log(err)
@@ -226,7 +226,7 @@ function next(){
 //s3 files geting
 async function s3fileslinks(){
   const jwtToken=localStorage.getItem('jwtToken');
-  const s3links=await axios.get('http://localhost:3000/s3filekink',{headers:{'Authorization' : `Bearer ${jwtToken}`}});
+  const s3links=await axios.get('http://13.48.30.5:3000/s3filekink',{headers:{'Authorization' : `Bearer ${jwtToken}`}});
   console.log(s3links.data);
   const Element = document.getElementById('s3files-container');
 
