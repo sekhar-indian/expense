@@ -16,7 +16,7 @@ try{
     if(err.response.status==401){
         window.location.href='../login/login.html'
     }
-} 
+}  
 }
 
 window.onload=()=>{
