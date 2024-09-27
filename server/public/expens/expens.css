@@ -1,0 +1,159 @@
+body{
+    background: linear-gradient(to right, #ff7e5f, #feb47b);
+    /* background-color: #85FFBD;
+    background-image: linear-gradient(45deg, #85FFBD 0%, #FFFB7D 100%) */
+    /* background-color: #FAD961;
+    background-image: linear-gradient(90deg, #FAD961 0%, #F76B1C 100%); */
+    /* background-image: linear-gradient(180deg, #A9C9FF 0%, #FFBBEC 100%); */
+}
+.input-container{
+   border-radius: 10px;
+   height: 40px;
+   border: solid none;
+   margin: 10px;
+   font-family: roboto; 
+   text-align: center;
+   width: 50%;
+   border-style: none;
+}
+.button-container{
+    border-radius: 10px;
+    height: 35px;
+    width: 50px;
+    border-style: none;
+    font-family: roboto;
+}
+.form-container{
+    text-align: center;
+    background-color: #b39a87;
+    border: solid blanchedalmond;
+    border-radius: 10px;
+    padding: 40px;
+    margin-left: 5%;
+    margin-right: 10%;
+    margin-bottom: 60px;
+    margin-top: 10px;
+  
+}
+.heading-container{
+    color: white;
+    font-weight: 800;
+    text-decoration:double;
+}
+.data-item-container{
+    background-color:  #bd9576;
+    color: white;
+    border-radius: 10px;
+    padding: 10px;
+    width: 40%;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: x-large;
+}
+.data-container{
+    display: flex;
+    margin: 10px;
+}
+#dataElement{
+    margin-top: 40px;
+}
+.data-delete-button-container{
+    border-radius: 10px;
+    background-color: white;
+    border: solid white;
+    height: 40px;
+    margin-left:10px;
+}
+
+.premium{
+    border: solid gold;
+    background-color: #FFD700;
+    color:rgb(214, 22, 22);
+    border-radius: 90px;
+    width: 95px;
+    height: 30px;
+    font-family: bold;
+  
+}
+
+#leederboards{
+    color:rgb(0, 0, 0);
+    background-color:white;
+    padding: 10px;
+    border-radius: 15px;
+}
+.leaderboard-heading{
+    /* text-align: center;
+    color:black;
+    background-color: #FFD700; */
+}
+.flex-container{
+    display: flex;
+}
+.flex-item{
+    width: 90%;
+    margin: 10px;
+    font-size: x-large;
+    font-family: roboto;
+}
+.table-heading-amount{
+    width: 90%;
+    margin: 10px;
+    font-size:xx-large;
+    font-family: roboto;
+}
+.table-heading-name{
+    width: 90%;
+    margin: 10px;
+    font-size:xx-large;
+    font-family: roboto;
+}
+.bb{
+    background-color: #FFD700;
+    border-radius: 10px;
+}
+.ld{
+    background-color: white;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+}
+.leaderboard{
+    height: 35px;
+    width: 90px;
+    border-radius: 10px;
+    border-style: none;
+    font-family: roboto;
+
+}
+
+/* paginqation */
+.pagination-button{
+    border-radius: 50%;
+    padding: 10px;
+    border-style: none;
+}
+.pagination-container{
+    margin-top: 20px;
+    margin-left: 15%;
+}
+.download-item-main{
+    padding: 10px;
+    border-radius: 10px;
+    border: solid white;
+    font-family: bold;
+    margin-bottom: 10px;
+   
+}
+
+#s3files-container{
+    display: flex;
+}
+.s3linksw{
+    text-decoration: none;
+    margin-top: 45px;
+    margin: 10px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 5px;
+
+}

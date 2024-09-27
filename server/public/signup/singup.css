@@ -1,5 +1,5 @@
 body{
-    background-color: rgb(54, 131, 207);
+    background: linear-gradient(to right, #ff7e5f, #feb47b);
 }
 .input-container{
    border-radius: 10px;
@@ -20,7 +20,7 @@ body{
 }
 .form-container{
     text-align: center;
-    background-color: rgb(29, 69, 106);
+    background-color: #b39a87;
     border: solid blanchedalmond;
     border-radius: 10px;
     padding: 40px;

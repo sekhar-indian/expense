@@ -8,7 +8,7 @@ async function  singupform (event){
     }
     console.log(data)
     try{
-        const singupform = await axios.post('http://localhost:3000/singupformdata',data);
+        const singupform = await axios.post('http://13.48.30.5:3000/singupformdata',data);
         event.target.reset()
         window.location.href="../login/login.html"
         console.log('ok')

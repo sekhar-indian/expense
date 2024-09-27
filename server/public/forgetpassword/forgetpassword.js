@@ -5,7 +5,7 @@ async function forgetpassword(event){
     }
     console.log(data)
     try{
-       const forgetpassword= await axios.post('http://localhost:3000/forget/password',data);
+       const forgetpassword= await axios.post('http://13.48.30.5:3000:3000/forget/password',data);
        console.log(forgetpassword)
     }catch(err){
        console.log(err)
